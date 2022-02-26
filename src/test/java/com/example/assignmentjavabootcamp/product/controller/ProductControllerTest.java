@@ -15,6 +15,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -51,6 +52,32 @@ class ProductControllerTest {
         Response actual = testRestTemplate.getForObject("/product?name=product", Response.class);
 
         assertEquals("Product name : product not found.", actual.getMessage());
+        assertEquals(new ArrayList<>(), actual.getData());
+    }
+
+    @Test
+    @DisplayName("test case get product by id and found.")
+    void test_getProductById_success() {
+        ProductsEntity productsEntity = new ProductsEntity();
+        productsEntity.setId(1);
+        productsEntity.setName("product");
+        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(productsEntity));
+
+        Response actual = testRestTemplate.getForObject("/product/1", Response.class);
+
+        Map expected = objectMapper.convertValue(productsEntity, HashMap.class);
+        assertEquals(ResponseMessageEnum.SUCCESS.getMessage(), actual.getMessage());
+        assertEquals(expected, actual.getData());
+    }
+
+    @Test
+    @DisplayName("test case get product by id and not found.")
+    void test_getProductById_notFound() {
+        when(productsRepository.findById(anyInt())).thenReturn(Optional.empty());
+
+        Response actual = testRestTemplate.getForObject("/product/1", Response.class);
+
+        assertEquals("Product id : 1 not found.", actual.getMessage());
         assertEquals(new ArrayList<>(), actual.getData());
     }
 }

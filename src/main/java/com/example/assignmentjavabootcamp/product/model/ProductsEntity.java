@@ -11,7 +11,6 @@ import java.util.List;
 @Data
 public class ProductsEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String brand;

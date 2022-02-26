@@ -31,6 +31,7 @@ public class AssignmentJavaBootCampApplication {
         usersRepository.save(usersEntity);
 
         ProductsEntity productsEntity1 = new ProductsEntity();
+        productsEntity1.setId(1);
         productsEntity1.setName("product 1");
         productsEntity1.setBrand("brand 1");
         productsEntity1.setDetail("detail 1");
@@ -42,6 +43,7 @@ public class AssignmentJavaBootCampApplication {
         productsEntity1.setSaleEndDate(getCurrentDate());
 
         ProductsEntity productsEntity2 = new ProductsEntity();
+        productsEntity2.setId(2);
         productsEntity2.setName("product 2");
         productsEntity2.setBrand("brand 2");
         productsEntity2.setDetail("detail 2");

@@ -8,10 +8,12 @@ import com.example.assignmentjavabootcamp.utils.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class ProductController {
@@ -22,8 +24,17 @@ public class ProductController {
     public Response searchProductByName(@RequestParam String name) {
         List<ProductsEntity> productsEntities = productsRepository.findAllByNameContains(name);
         if (CollectionUtils.isEmpty(productsEntities)) {
-            throw new ProductNotFoundException(name);
+            throw new ProductNotFoundException(String.format("name : %s", name));
         }
         return new Response(productsEntities, ResponseMessageEnum.SUCCESS.getMessage());
+    }
+
+    @GetMapping("/product/{id}")
+    public Response getProductById(@PathVariable Integer id) {
+        Optional<ProductsEntity> productsEntity = productsRepository.findById(id);
+        if (!productsEntity.isPresent()) {
+            throw new ProductNotFoundException(String.format("id : %s", id));
+        }
+        return new Response(productsEntity, ResponseMessageEnum.SUCCESS.getMessage());
     }
 }
