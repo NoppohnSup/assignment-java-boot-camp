@@ -1,5 +1,7 @@
 package com.example.assignmentjavabootcamp;
 
+import com.example.assignmentjavabootcamp.payment.entity.PaymentChannelEntity;
+import com.example.assignmentjavabootcamp.payment.repository.PaymentChannelRepository;
 import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
 import com.example.assignmentjavabootcamp.product.repository.ProductsRepository;
 import com.example.assignmentjavabootcamp.user.model.ShippingAddressEntity;
@@ -11,7 +13,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,7 +29,7 @@ public class AssignmentJavaBootCampApplication {
     ShippingAddressRepository shippingAddressRepository;
 
     @Autowired
-    EntityManager entityManager;
+    PaymentChannelRepository paymentChannelRepository;
 
     @PostConstruct
     public void initData() {
@@ -81,6 +82,10 @@ public class AssignmentJavaBootCampApplication {
         shippingAddressEntity2.setUsers(usersEntity);
         shippingAddressRepository.saveAll(Arrays.asList(shippingAddressEntity, shippingAddressEntity2));
 
+        PaymentChannelEntity paymentChannelEntity = new PaymentChannelEntity();
+        paymentChannelEntity.setId(1);
+        paymentChannelEntity.setName("Credit");
+        paymentChannelRepository.save(paymentChannelEntity);
     }
 
     private Timestamp getCurrentDate() {
