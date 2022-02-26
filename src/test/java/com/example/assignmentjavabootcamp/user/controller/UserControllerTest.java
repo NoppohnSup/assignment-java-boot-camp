@@ -1,6 +1,7 @@
 package com.example.assignmentjavabootcamp.user.controller;
 
 import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.repository.ShippingAddressRepository;
 import com.example.assignmentjavabootcamp.user.repository.UsersRepository;
 import com.example.assignmentjavabootcamp.utils.enums.ResponseMessageEnum;
 import com.example.assignmentjavabootcamp.utils.model.Response;
@@ -29,10 +30,14 @@ class UserControllerTest {
     @MockBean
     private UsersRepository usersRepository;
 
+    @MockBean
+    private ShippingAddressRepository shippingAddressRepository;
+
     @Test
     @DisplayName("test case get user and found.")
     void test_getUserById_success() {
         UsersEntity usersEntity = new UsersEntity();
+        usersEntity.setId(1000);
         usersEntity.setFirstName("first_name");
         usersEntity.setLastName("last_name");
 

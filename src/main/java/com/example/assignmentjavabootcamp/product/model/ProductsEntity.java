@@ -1,6 +1,5 @@
 package com.example.assignmentjavabootcamp.product.model;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +8,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "products")
 public class ProductsEntity {
     @Id
     private int id;

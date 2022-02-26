@@ -2,17 +2,19 @@ package com.example.assignmentjavabootcamp;
 
 import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
 import com.example.assignmentjavabootcamp.product.repository.ProductsRepository;
+import com.example.assignmentjavabootcamp.user.model.ShippingAddressEntity;
 import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.repository.ShippingAddressRepository;
 import com.example.assignmentjavabootcamp.user.repository.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 @SpringBootApplication
 public class AssignmentJavaBootCampApplication {
@@ -22,10 +24,16 @@ public class AssignmentJavaBootCampApplication {
     @Autowired
     ProductsRepository productsRepository;
 
+    @Autowired
+    ShippingAddressRepository shippingAddressRepository;
+
+    @Autowired
+    EntityManager entityManager;
+
     @PostConstruct
     public void initData() {
         UsersEntity usersEntity = new UsersEntity();
-        usersEntity.setId(1);
+//        usersEntity.setId(1);
         usersEntity.setFirstName("first");
         usersEntity.setLastName("last");
         usersRepository.save(usersEntity);
@@ -55,6 +63,24 @@ public class AssignmentJavaBootCampApplication {
         productsEntity2.setSaleEndDate(getCurrentDate());
 
         productsRepository.saveAll(Arrays.asList(productsEntity1, productsEntity2));
+
+        ShippingAddressEntity shippingAddressEntity = new ShippingAddressEntity();
+        shippingAddressEntity.setId(1);
+        shippingAddressEntity.setAddress("address");
+        shippingAddressEntity.setPostcode("11111");
+        shippingAddressEntity.setDistrict("district");
+        shippingAddressEntity.setProvince("province");
+        shippingAddressEntity.setUsers(usersEntity);
+
+        ShippingAddressEntity shippingAddressEntity2 = new ShippingAddressEntity();
+        shippingAddressEntity.setId(2);
+        shippingAddressEntity2.setAddress("address2");
+        shippingAddressEntity2.setPostcode("22222");
+        shippingAddressEntity2.setDistrict("district2");
+        shippingAddressEntity2.setProvince("province2");
+        shippingAddressEntity2.setUsers(usersEntity);
+        shippingAddressRepository.saveAll(Arrays.asList(shippingAddressEntity, shippingAddressEntity2));
+
     }
 
     private Timestamp getCurrentDate() {
