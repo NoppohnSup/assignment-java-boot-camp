@@ -1,5 +1,6 @@
 package com.example.assignmentjavabootcamp.order.controller;
 
+import com.example.assignmentjavabootcamp.order.model.Basket;
 import com.example.assignmentjavabootcamp.order.model.dto.BasketDTO;
 import com.example.assignmentjavabootcamp.order.model.request.AddBasketRequest;
 import com.example.assignmentjavabootcamp.order.service.BasketService;
@@ -18,6 +19,7 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -50,5 +52,18 @@ class BasketControllerTest {
         Map map = objectMapper.convertValue(basketDTO, HashMap.class);
         assertEquals(ResponseMessageEnum.SUCCESS.getMessage(), actual.getMessage());
         assertEquals(map, actual.getData());
+    }
+
+    @Test
+    void test_getBasket_success() {
+        BasketDTO basketDTO = BasketDTO.builder()
+                .id(1)
+                .build();
+        when(basketService.findBasketDetailsById(anyInt())).thenReturn(basketDTO);
+        Response actual = testRestTemplate.getForObject("/basket/1", Response.class);
+
+        Map excepted = objectMapper.convertValue(basketDTO, HashMap.class);
+        assertEquals(ResponseMessageEnum.SUCCESS.getMessage(), actual.getMessage());
+        assertEquals(excepted, actual.getData());
     }
 }

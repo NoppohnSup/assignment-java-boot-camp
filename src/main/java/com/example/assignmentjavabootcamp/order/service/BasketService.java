@@ -1,6 +1,7 @@
 package com.example.assignmentjavabootcamp.order.service;
 
 import com.example.assignmentjavabootcamp.order.exception.BasketCannotAddException;
+import com.example.assignmentjavabootcamp.order.exception.BasketNotFoundException;
 import com.example.assignmentjavabootcamp.order.model.Basket;
 import com.example.assignmentjavabootcamp.order.model.BasketItems;
 import com.example.assignmentjavabootcamp.order.model.dto.BasketDTO;
@@ -118,6 +119,24 @@ public class BasketService {
         }
 
         throw new BasketCannotAddException("Cannot add basket.");
+    }
+
+    public BasketDTO findBasketDetailsById(Integer id){
+        Optional<Basket> basket = basketRepository.findById(id);
+        if (basket.isPresent()) {
+            List<BasketItemDTO> basketItemDTOS = getBasketItemDTOS(basket.get());
+            UsersDTO usersDTO = getUsersDTO(basket.get());
+            return BasketDTO.builder()
+                    .id(basket.get().getId())
+                    .user(usersDTO)
+                    .totalPrice(basket.get().getTotalPrice())
+                    .createdAt(basket.get().getCreatedAt())
+                    .updatedAt(basket.get().getUpdatedAt())
+                    .basketItems(basketItemDTOS)
+                    .build();
+        }
+
+        throw new BasketNotFoundException("Basket not found.");
     }
 
     private UsersDTO getUsersDTO(Basket saveBasket) {

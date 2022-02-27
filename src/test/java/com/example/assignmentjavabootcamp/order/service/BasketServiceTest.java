@@ -1,6 +1,7 @@
 package com.example.assignmentjavabootcamp.order.service;
 
 import com.example.assignmentjavabootcamp.order.exception.BasketCannotAddException;
+import com.example.assignmentjavabootcamp.order.exception.BasketNotFoundException;
 import com.example.assignmentjavabootcamp.order.model.Basket;
 import com.example.assignmentjavabootcamp.order.model.BasketItems;
 import com.example.assignmentjavabootcamp.order.model.dto.BasketDTO;
@@ -246,6 +247,63 @@ class BasketServiceTest {
         BasketCannotAddException exception = assertThrows(BasketCannotAddException.class, () -> basketService.addBasketItems(request));
 
         String expectedMessage = "Cannot add basket.";
+        String actualMessage = exception.getMessage();
+
+        assertTrue(actualMessage.contains(expectedMessage));
+    }
+
+    @Test
+    @DisplayName("test case findBasketDetailsById and found.")
+    void test_findBasketDetailsById_success() {
+        BasketService basketService = new BasketService();
+        basketService.setBasketRepository(basketRepository);
+
+        Users users = new Users();
+        users.setId(1);
+        users.setFirstName("first");
+        users.setLastName("last");
+
+        Products products = new Products();
+        products.setId(1);
+        products.setName("product1");
+        products.setTotalPrice(1000);
+        products.setPercentSalePrice(10);
+
+        BasketItems basketItems = new BasketItems();
+        basketItems.setId(1);
+        basketItems.setQty(3);
+        basketItems.setProducts(products);
+
+        Basket basket = new Basket();
+        basket.setId(1);
+        basket.setTotalPrice(1800);
+        basket.addToBasketItems(basketItems);
+        basket.addUsers(users);
+
+        when(basketRepository.findById(anyInt())).thenReturn(Optional.of(basket));
+        BasketDTO actual = basketService.findBasketDetailsById(1);
+
+        verify(basketRepository).findById(1);
+
+        BasketDTO expected = BasketDTO.builder()
+                .id(1)
+                .totalPrice(1800)
+                .user(getUsersDTO(basket))
+                .basketItems(getBasketItemDTOS(basket))
+                .build();
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    @DisplayName("test case findBasketDetailsById and not found.")
+    void test_findBasketDetailsById_not_found() {
+        BasketService basketService = new BasketService();
+        basketService.setBasketRepository(basketRepository);
+
+        when(basketRepository.findById(anyInt())).thenReturn(Optional.empty());
+        Exception exception = assertThrows(BasketNotFoundException.class, () -> basketService.findBasketDetailsById(1));
+
+        String expectedMessage = "Basket not found.";
         String actualMessage = exception.getMessage();
 
         assertTrue(actualMessage.contains(expectedMessage));
