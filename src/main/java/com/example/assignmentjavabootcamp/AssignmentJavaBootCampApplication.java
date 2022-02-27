@@ -34,7 +34,7 @@ public class AssignmentJavaBootCampApplication {
     @PostConstruct
     public void initData() {
         UsersEntity usersEntity = new UsersEntity();
-//        usersEntity.setId(1);
+        usersEntity.setId(1);
         usersEntity.setFirstName("first");
         usersEntity.setLastName("last");
         usersRepository.save(usersEntity);
