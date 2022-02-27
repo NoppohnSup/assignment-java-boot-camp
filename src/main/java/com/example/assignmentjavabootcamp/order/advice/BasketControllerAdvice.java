@@ -2,6 +2,7 @@ package com.example.assignmentjavabootcamp.order.advice;
 
 import com.example.assignmentjavabootcamp.order.exception.BasketCannotAddException;
 import com.example.assignmentjavabootcamp.order.exception.BasketNotFoundException;
+import com.example.assignmentjavabootcamp.order.exception.ConfirmOrderException;
 import com.example.assignmentjavabootcamp.utils.model.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,6 +25,13 @@ public class BasketControllerAdvice {
     @ResponseBody
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Response basketNotFound(BasketCannotAddException e){
+        return new Response(new ArrayList<>(), e.getMessage());
+    }
+
+    @ExceptionHandler(ConfirmOrderException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Response confirmOrderException(ConfirmOrderException e){
         return new Response(new ArrayList<>(), e.getMessage());
     }
 }

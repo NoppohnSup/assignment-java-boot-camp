@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Entity
 @Getter
 @Setter
-public class BasketItems {
+public class OrderItems {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -20,9 +20,11 @@ public class BasketItems {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
+    @Setter
     private Products products;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "basket_id", nullable = false)
-    private Basket basket;
+    @JoinColumn(name = "order_id", nullable = false)
+    @Setter
+    private Orders orders;
 }

@@ -1,6 +1,7 @@
 package com.example.assignmentjavabootcamp.user.model;
 
 import com.example.assignmentjavabootcamp.order.model.Basket;
+import com.example.assignmentjavabootcamp.order.model.Orders;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,4 +25,7 @@ public class Users {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "basket_id", referencedColumnName = "id")
     private Basket baskets;
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Orders> orders = new ArrayList<>();
 }

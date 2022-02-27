@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Basket {
+public class Orders {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -20,19 +20,15 @@ public class Basket {
     private Timestamp createdAt;
     private Timestamp updatedAt;
 
-    @OneToOne(mappedBy = "baskets")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_order_id", nullable = false)
     private Users users;
 
-    @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<BasketItems> basketItems = new ArrayList<>();
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<OrderItems> orderItems = new ArrayList<>();
 
-    public void addToBasketItems(BasketItems basketItems){
-        basketItems.setBasket(this);
-        this.basketItems.add(basketItems);
-    }
-
-    public void addUsers(Users users){
-        users.setBaskets(this);
-        this.users = users;
+    public void addToOrderItems(OrderItems orderItems){
+        orderItems.setOrders(this);
+        this.orderItems.add(orderItems);
     }
 }
