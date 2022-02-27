@@ -1,7 +1,7 @@
 package com.example.assignmentjavabootcamp.product.controller;
 
 import com.example.assignmentjavabootcamp.product.exception.ProductNotFoundException;
-import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
+import com.example.assignmentjavabootcamp.product.model.Products;
 import com.example.assignmentjavabootcamp.product.repository.ProductsRepository;
 import com.example.assignmentjavabootcamp.utils.enums.ResponseMessageEnum;
 import com.example.assignmentjavabootcamp.utils.model.Response;
@@ -22,7 +22,7 @@ public class ProductController {
 
     @GetMapping("/product")
     public Response searchProductByName(@RequestParam String name) {
-        List<ProductsEntity> productsEntities = productsRepository.findAllByNameContains(name);
+        List<Products> productsEntities = productsRepository.findAllByNameContains(name);
         if (CollectionUtils.isEmpty(productsEntities)) {
             throw new ProductNotFoundException(String.format("name : %s", name));
         }
@@ -31,7 +31,7 @@ public class ProductController {
 
     @GetMapping("/product/{id}")
     public Response getProductById(@PathVariable Integer id) {
-        Optional<ProductsEntity> productsEntity = productsRepository.findById(id);
+        Optional<Products> productsEntity = productsRepository.findById(id);
         if (!productsEntity.isPresent()) {
             throw new ProductNotFoundException(String.format("id : %s", id));
         }

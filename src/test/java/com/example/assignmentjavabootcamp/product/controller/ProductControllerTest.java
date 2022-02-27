@@ -1,6 +1,6 @@
 package com.example.assignmentjavabootcamp.product.controller;
 
-import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
+import com.example.assignmentjavabootcamp.product.model.Products;
 import com.example.assignmentjavabootcamp.product.repository.ProductsRepository;
 import com.example.assignmentjavabootcamp.utils.enums.ResponseMessageEnum;
 import com.example.assignmentjavabootcamp.utils.model.Response;
@@ -33,13 +33,13 @@ class ProductControllerTest {
     @Test
     @DisplayName("test case search product and found.")
     void test_searchProductByName_success() {
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setName("product");
-        when(productsRepository.findAllByNameContains(anyString())).thenReturn(Collections.singletonList(productsEntity));
+        Products products = new Products();
+        products.setName("product");
+        when(productsRepository.findAllByNameContains(anyString())).thenReturn(Collections.singletonList(products));
 
         Response actual = testRestTemplate.getForObject("/product?name=product", Response.class);
 
-        Map expected = objectMapper.convertValue(productsEntity, HashMap.class);
+        Map expected = objectMapper.convertValue(products, HashMap.class);
         assertEquals(ResponseMessageEnum.SUCCESS.getMessage(), actual.getMessage());
         assertEquals(Collections.singletonList(expected), actual.getData());
     }
@@ -58,14 +58,14 @@ class ProductControllerTest {
     @Test
     @DisplayName("test case get product by id and found.")
     void test_getProductById_success() {
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setId(1);
-        productsEntity.setName("product");
-        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(productsEntity));
+        Products products = new Products();
+        products.setId(1);
+        products.setName("product");
+        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(products));
 
         Response actual = testRestTemplate.getForObject("/product/1", Response.class);
 
-        Map expected = objectMapper.convertValue(productsEntity, HashMap.class);
+        Map expected = objectMapper.convertValue(products, HashMap.class);
         assertEquals(ResponseMessageEnum.SUCCESS.getMessage(), actual.getMessage());
         assertEquals(expected, actual.getData());
     }

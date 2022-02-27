@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @Table(name = "payment_channel")
-public class PaymentChannelEntity {
+public class PaymentChannel {
     @Id
     private int id;
     private String name;

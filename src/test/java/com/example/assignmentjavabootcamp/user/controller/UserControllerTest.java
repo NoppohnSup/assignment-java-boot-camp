@@ -1,6 +1,6 @@
 package com.example.assignmentjavabootcamp.user.controller;
 
-import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.model.Users;
 import com.example.assignmentjavabootcamp.user.repository.ShippingAddressRepository;
 import com.example.assignmentjavabootcamp.user.repository.UsersRepository;
 import com.example.assignmentjavabootcamp.utils.enums.ResponseMessageEnum;
@@ -36,16 +36,16 @@ class UserControllerTest {
     @Test
     @DisplayName("test case get user and found.")
     void test_getUserById_success() {
-        UsersEntity usersEntity = new UsersEntity();
-        usersEntity.setId(1000);
-        usersEntity.setFirstName("first_name");
-        usersEntity.setLastName("last_name");
+        Users users = new Users();
+        users.setId(1000);
+        users.setFirstName("first_name");
+        users.setLastName("last_name");
 
-        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(usersEntity));
+        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(users));
 
         Response actual = testRestTemplate.getForObject("/user/1", Response.class);
 
-        Map expected = objectMapper.convertValue(usersEntity, HashMap.class);
+        Map expected = objectMapper.convertValue(users, HashMap.class);
         assertEquals(ResponseMessageEnum.SUCCESS.getMessage(), actual.getMessage());
         assertEquals(expected, actual.getData());
     }

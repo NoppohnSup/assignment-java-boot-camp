@@ -8,11 +8,11 @@ import com.example.assignmentjavabootcamp.order.model.dto.BasketItemDTO;
 import com.example.assignmentjavabootcamp.order.model.request.AddBasketRequest;
 import com.example.assignmentjavabootcamp.order.repository.BasketItemsRepository;
 import com.example.assignmentjavabootcamp.order.repository.BasketRepository;
-import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
+import com.example.assignmentjavabootcamp.product.model.Products;
 import com.example.assignmentjavabootcamp.product.model.dto.ProductDTO;
 import com.example.assignmentjavabootcamp.product.repository.ProductsRepository;
-import com.example.assignmentjavabootcamp.user.model.ShippingAddressEntity;
-import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.model.ShippingAddress;
+import com.example.assignmentjavabootcamp.user.model.Users;
 import com.example.assignmentjavabootcamp.user.model.dto.ShippingAddressDTO;
 import com.example.assignmentjavabootcamp.user.model.dto.UsersDTO;
 import com.example.assignmentjavabootcamp.user.repository.UsersRepository;
@@ -59,29 +59,29 @@ class BasketServiceTest {
         basketService.setUsersRepository(usersRepository);
         basketService.setDateUtils(dateUtils);
 
-        ShippingAddressEntity shippingAddressEntity = new ShippingAddressEntity();
-        shippingAddressEntity.setId(1);
-        shippingAddressEntity.setAddress("address");
+        ShippingAddress shippingAddress = new ShippingAddress();
+        shippingAddress.setId(1);
+        shippingAddress.setAddress("address");
 
-        UsersEntity usersEntity = new UsersEntity();
-        usersEntity.setId(1);
-        usersEntity.setFirstName("first");
-        usersEntity.setLastName("last");
-        usersEntity.setShippingAddress(Collections.singletonList(shippingAddressEntity));
+        Users users = new Users();
+        users.setId(1);
+        users.setFirstName("first");
+        users.setLastName("last");
+        users.setShippingAddress(Collections.singletonList(shippingAddress));
 
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setId(1);
-        productsEntity.setName("product1");
-        productsEntity.setTotalPrice(1000);
-        productsEntity.setPercentSalePrice(10);
+        Products products = new Products();
+        products.setId(1);
+        products.setName("product1");
+        products.setTotalPrice(1000);
+        products.setPercentSalePrice(10);
 
         Basket basket = new Basket();
         basket.setId(1);
         basket.setTotalPrice(1800);
-        basket.setUsers(usersEntity);
+        basket.setUsers(users);
 
-        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(usersEntity));
-        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(productsEntity));
+        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(users));
+        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(products));
         when(basketRepository.findByUsersId((anyInt()))).thenReturn(Optional.empty());
         when(basketRepository.save(any(Basket.class))).thenReturn(basket);
         when(dateUtils.getCurrentDate()).thenReturn(new Timestamp(1645950039));
@@ -95,7 +95,7 @@ class BasketServiceTest {
 
         verify(usersRepository).findById(1);
         verify(productsRepository).findById(1);
-        verify(basketRepository).findByUsersId(usersEntity.getId());
+        verify(basketRepository).findByUsersId(users.getId());
 
         BasketDTO expected = BasketDTO.builder()
                 .id(1)
@@ -117,30 +117,30 @@ class BasketServiceTest {
         basketService.setUsersRepository(usersRepository);
         basketService.setDateUtils(dateUtils);
 
-        UsersEntity usersEntity = new UsersEntity();
-        usersEntity.setId(1);
-        usersEntity.setFirstName("first");
-        usersEntity.setLastName("last");
+        Users users = new Users();
+        users.setId(1);
+        users.setFirstName("first");
+        users.setLastName("last");
 
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setId(1);
-        productsEntity.setName("product1");
-        productsEntity.setTotalPrice(1000);
-        productsEntity.setPercentSalePrice(10);
+        Products products = new Products();
+        products.setId(1);
+        products.setName("product1");
+        products.setTotalPrice(1000);
+        products.setPercentSalePrice(10);
 
         BasketItems basketItems = new BasketItems();
         basketItems.setId(1);
         basketItems.setQty(3);
-        basketItems.setProducts(productsEntity);
+        basketItems.setProducts(products);
 
         Basket basket = new Basket();
         basket.setId(1);
         basket.setTotalPrice(1800);
-        basket.setUsers(usersEntity);
+        basket.setUsers(users);
         basket.addToBasketItems(basketItems);
 
-        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(usersEntity));
-        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(productsEntity));
+        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(users));
+        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(products));
         when(basketRepository.findByUsersId(anyInt())).thenReturn(Optional.of(basket));
         when(basketRepository.save(any(Basket.class))).thenReturn(basket);
         when(dateUtils.getCurrentDate()).thenReturn(new Timestamp(1645950039));
@@ -154,7 +154,7 @@ class BasketServiceTest {
 
         verify(usersRepository).findById(1);
         verify(productsRepository).findById(1);
-        verify(basketRepository).findByUsersId(usersEntity.getId());
+        verify(basketRepository).findByUsersId(users.getId());
 
         BasketDTO expected = BasketDTO.builder()
                 .id(1)
@@ -177,32 +177,32 @@ class BasketServiceTest {
         basketService.setUsersRepository(usersRepository);
         basketService.setDateUtils(dateUtils);
 
-        UsersEntity usersEntity = new UsersEntity();
-        usersEntity.setId(1);
-        usersEntity.setFirstName("first");
-        usersEntity.setLastName("last");
+        Users users = new Users();
+        users.setId(1);
+        users.setFirstName("first");
+        users.setLastName("last");
 
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setId(1);
-        productsEntity.setName("product1");
-        productsEntity.setTotalPrice(1000);
-        productsEntity.setPercentSalePrice(10);
+        Products products = new Products();
+        products.setId(1);
+        products.setName("product1");
+        products.setTotalPrice(1000);
+        products.setPercentSalePrice(10);
 
         BasketItems basketItems = new BasketItems();
         basketItems.setId(1);
         basketItems.setQty(3);
-        basketItems.setProducts(productsEntity);
+        basketItems.setProducts(products);
 
         Basket basket = new Basket();
         basket.setId(1);
         basket.setTotalPrice(1800);
-        basket.setUsers(usersEntity);
+        basket.setUsers(users);
         basket.addToBasketItems(basketItems);
 
-        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(usersEntity));
-        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(productsEntity));
+        when(usersRepository.findById(anyInt())).thenReturn(Optional.of(users));
+        when(productsRepository.findById(anyInt())).thenReturn(Optional.of(products));
         when(basketRepository.findByUsersId(anyInt())).thenReturn(Optional.of(basket));
-        when(basketItemsRepository.findByProductsAndBasket(any(ProductsEntity.class), any(Basket.class))).thenReturn(Optional.of(basketItems));
+        when(basketItemsRepository.findByProductsAndBasket(any(Products.class), any(Basket.class))).thenReturn(Optional.of(basketItems));
         when(basketRepository.save(any(Basket.class))).thenReturn(basket);
         when(dateUtils.getCurrentDate()).thenReturn(new Timestamp(1645950039));
 
@@ -215,7 +215,7 @@ class BasketServiceTest {
 
         verify(usersRepository).findById(1);
         verify(productsRepository).findById(1);
-        verify(basketRepository).findByUsersId(usersEntity.getId());
+        verify(basketRepository).findByUsersId(users.getId());
 
         BasketDTO expected = BasketDTO.builder()
                 .id(1)
@@ -252,8 +252,8 @@ class BasketServiceTest {
     }
 
     private UsersDTO getUsersDTO(Basket saveBasket) {
-        UsersEntity users = saveBasket.getUsers();
-        List<ShippingAddressEntity> shippingAddress = users.getShippingAddress();
+        Users users = saveBasket.getUsers();
+        List<ShippingAddress> shippingAddress = users.getShippingAddress();
         List<ShippingAddressDTO> shippingAddressDTOS = shippingAddress.stream()
                 .map(item -> ShippingAddressDTO.builder()
                         .id(item.getId())
@@ -274,7 +274,7 @@ class BasketServiceTest {
     private List<BasketItemDTO> getBasketItemDTOS(Basket saveBasket) {
         return saveBasket.getBasketItems().stream()
                 .map(item -> {
-                            ProductsEntity products = item.getProducts();
+                            Products products = item.getProducts();
                             ProductDTO productDTO = ProductDTO.builder()
                                     .id(products.getId())
                                     .amount(products.getAmount())

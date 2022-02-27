@@ -2,13 +2,12 @@ package com.example.assignmentjavabootcamp.order.repository;
 
 import com.example.assignmentjavabootcamp.order.model.Basket;
 import com.example.assignmentjavabootcamp.order.model.BasketItems;
-import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
+import com.example.assignmentjavabootcamp.product.model.Products;
 import com.example.assignmentjavabootcamp.product.repository.ProductsRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.util.CollectionUtils;
 
 import java.util.Optional;
 
@@ -31,17 +30,17 @@ class BasketItemsRepositoryTest {
         Basket basket = new Basket();
         basket.setTotalPrice(2000);
 
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsRepository.save(productsEntity);
+        Products products = new Products();
+        productsRepository.save(products);
 
         BasketItems basketItems = new BasketItems();
         basketItems.setBasket(basket);
-        basketItems.setProducts(productsEntity);
+        basketItems.setProducts(products);
 
         basket.addToBasketItems(basketItems);
         basketRepository.save(basket);
 
-        Optional<BasketItems> actual = basketItemsRepository.findByProductsAndBasket(productsEntity, basket);
+        Optional<BasketItems> actual = basketItemsRepository.findByProductsAndBasket(products, basket);
         assertTrue(actual.isPresent());
     }
 
@@ -50,10 +49,10 @@ class BasketItemsRepositoryTest {
     void test_findByProductsAndBasket_fail() {
         Basket basket = new Basket();
         basket.setId(1000);
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setId(1000);
+        Products products = new Products();
+        products.setId(1000);
 
-        Optional<BasketItems> actual = basketItemsRepository.findByProductsAndBasket(productsEntity, basket);
+        Optional<BasketItems> actual = basketItemsRepository.findByProductsAndBasket(products, basket);
         assertFalse(actual.isPresent());
     }
 }

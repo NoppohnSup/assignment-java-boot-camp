@@ -1,7 +1,7 @@
 package com.example.assignmentjavabootcamp.user.controller;
 
 import com.example.assignmentjavabootcamp.user.exception.UserNotFoundException;
-import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.model.Users;
 import com.example.assignmentjavabootcamp.user.repository.ShippingAddressRepository;
 import com.example.assignmentjavabootcamp.user.repository.UsersRepository;
 import com.example.assignmentjavabootcamp.utils.enums.ResponseMessageEnum;
@@ -23,7 +23,7 @@ public class UsersController {
 
     @GetMapping("/user/{id}")
     public Response getUserById(@PathVariable Integer id){
-        Optional<UsersEntity> usersEntity = usersRepository.findById(id);
+        Optional<Users> usersEntity = usersRepository.findById(id);
         if (!usersEntity.isPresent()) {
             throw new UserNotFoundException(id);
         }

@@ -1,9 +1,7 @@
 package com.example.assignmentjavabootcamp.user.model;
 
 import com.example.assignmentjavabootcamp.order.model.Basket;
-import lombok.Data;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -14,14 +12,14 @@ import java.util.List;
 @Getter
 @Setter
 @Table(name = "users")
-public class UsersEntity {
+public class Users {
     @Id
     private int id;
     private String firstName;
     private String lastName;
 
     @OneToMany(mappedBy = "users")
-    private List<ShippingAddressEntity> shippingAddress = new ArrayList<>();
+    private List<ShippingAddress> shippingAddress = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "basket_id", referencedColumnName = "id")

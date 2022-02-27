@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "shipping_address")
-public class ShippingAddressEntity {
+public class ShippingAddress {
     @Id
     @Getter
     @Setter
@@ -31,5 +31,5 @@ public class ShippingAddressEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @Setter
-    private UsersEntity users;
+    private Users users;
 }

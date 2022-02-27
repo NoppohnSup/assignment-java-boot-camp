@@ -1,6 +1,6 @@
 package com.example.assignmentjavabootcamp.product.repository;
 
-import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
+import com.example.assignmentjavabootcamp.product.model.Products;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ class ProductsRepositoryTest {
     @Test
     @DisplayName("repository test case find product by name and found.")
     void test_findAllByNameContains_success() {
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setId(1000);
-        productsEntity.setName("name");
-        productsRepository.save(productsEntity);
+        Products products = new Products();
+        products.setId(1000);
+        products.setName("name");
+        productsRepository.save(products);
 
-        List<ProductsEntity> actual = productsRepository.findAllByNameContains("name");
+        List<Products> actual = productsRepository.findAllByNameContains("name");
 
         assertFalse(CollectionUtils.isEmpty(actual));
     }
@@ -34,7 +34,7 @@ class ProductsRepositoryTest {
     @Test
     @DisplayName("repository test case find product by name and not found.")
     void test_findAllByNameContains_fail_not_found() {
-        List<ProductsEntity> actual = productsRepository.findAllByNameContains("name");
+        List<Products> actual = productsRepository.findAllByNameContains("name");
 
         assertTrue(CollectionUtils.isEmpty(actual));
     }
@@ -42,12 +42,12 @@ class ProductsRepositoryTest {
     @Test
     @DisplayName("repository test case find product by id and found.")
     void test_findById_success() {
-        ProductsEntity productsEntity = new ProductsEntity();
-        productsEntity.setId(1000);
-        productsEntity.setName("name");
-        productsRepository.save(productsEntity);
+        Products products = new Products();
+        products.setId(1000);
+        products.setName("name");
+        productsRepository.save(products);
 
-        Optional<ProductsEntity> actual = productsRepository.findById(1000);
+        Optional<Products> actual = productsRepository.findById(1000);
 
         assertTrue(actual.isPresent());
     }
@@ -55,7 +55,7 @@ class ProductsRepositoryTest {
     @Test
     @DisplayName("repository test case find product by id and not found.")
     void test_findById_fail_not_found() {
-        Optional<ProductsEntity> actual = productsRepository.findById(1000);
+        Optional<Products> actual = productsRepository.findById(1000);
 
         assertFalse(actual.isPresent());
     }

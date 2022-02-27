@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @Data
 @Table(name = "products")
-public class ProductsEntity {
+public class Products {
     @Id
     private int id;
     private String name;

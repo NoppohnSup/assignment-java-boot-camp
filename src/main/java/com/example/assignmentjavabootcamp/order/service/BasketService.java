@@ -8,11 +8,11 @@ import com.example.assignmentjavabootcamp.order.model.dto.BasketItemDTO;
 import com.example.assignmentjavabootcamp.order.model.request.AddBasketRequest;
 import com.example.assignmentjavabootcamp.order.repository.BasketItemsRepository;
 import com.example.assignmentjavabootcamp.order.repository.BasketRepository;
-import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
+import com.example.assignmentjavabootcamp.product.model.Products;
 import com.example.assignmentjavabootcamp.product.model.dto.ProductDTO;
 import com.example.assignmentjavabootcamp.product.repository.ProductsRepository;
-import com.example.assignmentjavabootcamp.user.model.ShippingAddressEntity;
-import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.model.ShippingAddress;
+import com.example.assignmentjavabootcamp.user.model.Users;
 import com.example.assignmentjavabootcamp.user.model.dto.ShippingAddressDTO;
 import com.example.assignmentjavabootcamp.user.model.dto.UsersDTO;
 import com.example.assignmentjavabootcamp.user.repository.UsersRepository;
@@ -50,12 +50,12 @@ public class BasketService {
 
     @Transactional
     public BasketDTO addBasketItems(AddBasketRequest request) {
-        Optional<UsersEntity> userEntity = usersRepository.findById(request.getUserId());
-        Optional<ProductsEntity> productsEntity = productsRepository.findById(request.getProductId());
+        Optional<Users> userEntity = usersRepository.findById(request.getUserId());
+        Optional<Products> productsEntity = productsRepository.findById(request.getProductId());
 
         if (userEntity.isPresent() && productsEntity.isPresent()) {
-            UsersEntity user = userEntity.get();
-            ProductsEntity product = productsEntity.get();
+            Users user = userEntity.get();
+            Products product = productsEntity.get();
             double productPrice = product.getTotalPrice() - (product.getTotalPrice() * (product.getPercentSalePrice() / 100));
             double totalPriceItem = productPrice * request.getQty();
 
@@ -121,8 +121,8 @@ public class BasketService {
     }
 
     private UsersDTO getUsersDTO(Basket saveBasket) {
-        UsersEntity users = saveBasket.getUsers();
-        List<ShippingAddressEntity> shippingAddress = users.getShippingAddress();
+        Users users = saveBasket.getUsers();
+        List<ShippingAddress> shippingAddress = users.getShippingAddress();
         List<ShippingAddressDTO> shippingAddressDTOS = shippingAddress.stream()
                 .map(item -> ShippingAddressDTO.builder()
                         .id(item.getId())
@@ -143,7 +143,7 @@ public class BasketService {
     private List<BasketItemDTO> getBasketItemDTOS(Basket saveBasket) {
         return saveBasket.getBasketItems().stream()
                 .map(item -> {
-                            ProductsEntity products = item.getProducts();
+                            Products products = item.getProducts();
                             ProductDTO productDTO = ProductDTO.builder()
                                     .id(products.getId())
                                     .amount(products.getAmount())

@@ -1,6 +1,6 @@
 package com.example.assignmentjavabootcamp.order.model;
 
-import com.example.assignmentjavabootcamp.product.model.ProductsEntity;
+import com.example.assignmentjavabootcamp.product.model.Products;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ public class BasketItems {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     @Setter
-    private ProductsEntity products;
+    private Products products;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "basket_id", nullable = false)

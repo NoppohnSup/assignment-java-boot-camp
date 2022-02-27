@@ -1,6 +1,6 @@
 package com.example.assignmentjavabootcamp.payment.controller;
 
-import com.example.assignmentjavabootcamp.payment.entity.PaymentChannelEntity;
+import com.example.assignmentjavabootcamp.payment.entity.PaymentChannel;
 import com.example.assignmentjavabootcamp.payment.repository.PaymentChannelRepository;
 import com.example.assignmentjavabootcamp.utils.enums.ResponseMessageEnum;
 import com.example.assignmentjavabootcamp.utils.model.Response;
@@ -34,13 +34,13 @@ class PaymentControllerTest {
     @Test
     @DisplayName("test case get all payment channel and found.")
     void test_getAllPaymentChannel_success() {
-        PaymentChannelEntity paymentChannelEntity = new PaymentChannelEntity();
-        paymentChannelEntity.setName("Credit");
-        when(paymentChannelRepository.findAll()).thenReturn(Collections.singletonList(paymentChannelEntity));
+        PaymentChannel paymentChannel = new PaymentChannel();
+        paymentChannel.setName("Credit");
+        when(paymentChannelRepository.findAll()).thenReturn(Collections.singletonList(paymentChannel));
 
         Response actual = testRestTemplate.getForObject("/payment_channel", Response.class);
 
-        Map expected = objectMapper.convertValue(paymentChannelEntity, HashMap.class);
+        Map expected = objectMapper.convertValue(paymentChannel, HashMap.class);
         assertEquals(ResponseMessageEnum.SUCCESS.getMessage(), actual.getMessage());
         assertEquals(Collections.singletonList(expected), actual.getData());
     }

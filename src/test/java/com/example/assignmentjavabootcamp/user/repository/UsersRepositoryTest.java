@@ -1,6 +1,6 @@
 package com.example.assignmentjavabootcamp.user.repository;
 
-import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.model.Users;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +20,13 @@ class UsersRepositoryTest {
     @Test
     @DisplayName("repository test case find user by id and found.")
     void test_findById_success() {
-        UsersEntity usersEntity = new UsersEntity();
-        usersEntity.setId(1000);
-        usersEntity.setFirstName("first");
-        usersEntity.setLastName("last");
-        usersRepository.save(usersEntity);
+        Users users = new Users();
+        users.setId(1000);
+        users.setFirstName("first");
+        users.setLastName("last");
+        usersRepository.save(users);
 
-        Optional<UsersEntity> actual = usersRepository.findById(1000);
+        Optional<Users> actual = usersRepository.findById(1000);
 
         assertTrue(actual.isPresent());
     }
@@ -34,7 +34,7 @@ class UsersRepositoryTest {
     @Test
     @DisplayName("repository test case find user by id and not found.")
     void test_findById_fail_not_found() {
-        Optional<UsersEntity> actual = usersRepository.findById(1000);
+        Optional<Users> actual = usersRepository.findById(1000);
 
         assertFalse(actual.isPresent());
     }

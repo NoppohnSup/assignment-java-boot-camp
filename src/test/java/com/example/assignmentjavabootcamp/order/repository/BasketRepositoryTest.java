@@ -1,7 +1,7 @@
 package com.example.assignmentjavabootcamp.order.repository;
 
 import com.example.assignmentjavabootcamp.order.model.Basket;
-import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.model.Users;
 import com.example.assignmentjavabootcamp.user.repository.UsersRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,9 +23,9 @@ class BasketRepositoryTest {
     @Test
     @DisplayName("repository test case find basket by userId and found.")
     void test_findByUsers_success() {
-        UsersEntity users = new UsersEntity();
+        Users users = new Users();
         users.setId(1000);
-        UsersEntity save = usersRepository.save(users);
+        Users save = usersRepository.save(users);
 
         Basket basket = new Basket();
         basket.addUsers(save);

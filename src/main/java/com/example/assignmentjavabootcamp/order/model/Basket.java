@@ -1,6 +1,6 @@
 package com.example.assignmentjavabootcamp.order.model;
 
-import com.example.assignmentjavabootcamp.user.model.UsersEntity;
+import com.example.assignmentjavabootcamp.user.model.Users;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +21,7 @@ public class Basket {
     private Timestamp updatedAt;
 
     @OneToOne(mappedBy = "baskets")
-    private UsersEntity users;
+    private Users users;
 
     @OneToMany(mappedBy = "basket", cascade = CascadeType.ALL)
     List<BasketItems> basketItems = new ArrayList<>();
@@ -31,7 +31,7 @@ public class Basket {
         this.basketItems.add(basketItems);
     }
 
-    public void addUsers(UsersEntity users){
+    public void addUsers(Users users){
         users.setBaskets(this);
         this.users = users;
     }
