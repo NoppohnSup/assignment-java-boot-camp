@@ -1,6 +1,6 @@
 ## Details
 * [API Document](https://github.com/NoppohnSup/assignment-java-boot-camp/wiki/Api-documents)
-* [Issues](https://github.com/NoppohnSup/assignment-java-boot-camp/issues)
+* [Issues](https://github.com/NoppohnSup/assignment-java-boot-camp/projects/2)
 
 ## Tools
 - Java 8
